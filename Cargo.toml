@@ -2,3 +2,8 @@
 name = "gimei"
 version = "0.1.0"
 authors = ["Kentaro Takiguchi <kentaro-takiguchi@cookpad.com>"]
+
+[dependencies]
+toml = "*"
+rustc-serialize = "*"
+rand = "*"

@@ -1,31 +1,75 @@
+extern crate rand;
+
+mod gender;
+
+use toml::Value;
+use self::gender::Gender;
+
 #[derive(Debug)]
 pub struct Name {
     pub first: First,
-    pub last: Last,
-    pub gender: Gender
+    pub last: Last
 }
 
 impl Name {
     pub fn new() -> Name {
-        let first = First {
-            hiragana: "はるな".to_string()
-        };
+        Name::new_with_gender(Gender::sample())
+    }
 
-        let last = Last {
-            hiragana: "さいとう".to_string()
-        };
-
+    pub fn new_with_gender(gender: Gender) -> Name {
         Name {
-            first: first,
-            last: last,
-            gender: Gender::Female
+            first: First::new(gender),
+            last: Last::new(),
         }
     }
 
-    pub fn hiragana(&self) -> String {
-        let first = self.first.hiragana.to_string();
-        let last = self.last.hiragana.to_string();
+    pub fn kanji(&self) -> String {
+        let first = self.first.kanji();
+        let last = self.last.kanji();
         vec![last, first].connect(" ")
+    }
+
+    pub fn hiragana(&self) -> String {
+        let first = self.first.hiragana();
+        let last = self.last.hiragana();
+        vec![last, first].connect(" ")
+    }
+
+    pub fn katakana(&self) -> String {
+        let first = self.first.katakana();
+        let last = self.last.katakana();
+        vec![last, first].connect(" ")
+    }
+
+    pub fn is_female(&self) -> bool {
+        self.first.is_female()
+    }
+
+    pub fn is_male(&self) -> bool {
+        self.first.is_male()
+    }
+}
+
+#[derive(Debug)]
+pub struct First {
+    pub gender: Gender,
+    name: Vec<String>
+}
+
+impl First {
+    pub fn new(gender: Gender) -> First {
+        let name = super::names()
+            .get("first_name")
+            .and_then(|n| n.lookup(gender.type_str()))
+            .and_then(|n| n.sample().as_slice())
+            .unwrap()
+            .iter()
+            .map(|n| n.as_str().unwrap().to_string())
+            .collect::<Vec<String>>();
+        First {
+            gender: gender,
+            name: name
+        }
     }
 
     pub fn is_female(&self) -> bool {
@@ -35,36 +79,117 @@ impl Name {
     pub fn is_male(&self) -> bool {
         self.gender.is_male()
     }
-}
 
-#[derive(Debug)]
-pub enum Gender {
-    Female,
-    Male
-}
-
-impl Gender {
-    pub fn is_female(&self) -> bool {
-        match *self {
-            Gender::Female => true,
-            _ => false
-        }
+    pub fn kanji(&self) -> String {
+        self.name.get(0).unwrap().to_string()
     }
 
-    pub fn is_male(&self) -> bool {
-        match *self {
-            Gender::Male => true,
-            _ => false
-        }
+    pub fn hiragana(&self) -> String {
+        self.name.get(1).unwrap().to_string()
     }
-}
 
-#[derive(Debug)]
-pub struct First {
-    pub hiragana: String
+    pub fn katakana(&self) -> String {
+        self.name.get(2).unwrap().to_string()
+    }
 }
 
 #[derive(Debug)]
 pub struct Last {
-    pub hiragana: String
+    name: Vec<String>
+}
+
+impl Last {
+    pub fn new() -> Last {
+        let name = super::names()
+            .get("last_name")
+            .and_then(|n| n.sample().as_slice())
+            .unwrap()
+            .iter()
+            .map(|n| n.as_str().unwrap().to_string())
+            .collect::<Vec<String>>();
+        Last {
+            name: name
+        }
+    }
+
+    pub fn kanji(&self) -> String {
+        self.name.get(0).unwrap().to_string()
+    }
+
+    pub fn hiragana(&self) -> String {
+        self.name.get(1).unwrap().to_string()
+    }
+
+    pub fn katakana(&self) -> String {
+        self.name.get(2).unwrap().to_string()
+    }
+}
+
+trait Samplable {
+    fn sample(&self) -> & Value;
+}
+
+impl Samplable for Value {
+    fn sample(&self) -> & Value {
+        match *self {
+            Value::Array(..) => {
+                let vec = &self.as_slice().unwrap();
+                let index = rand::random::<usize>() % vec.len();
+                &vec[index]
+            },
+            _ => self
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use super::gender::Gender;
+
+    #[test]
+    fn kanji() {
+        let name = Name::new();
+        assert!(!name.kanji().is_empty());
+    }
+
+    #[test]
+    fn hiragana() {
+        let name = Name::new();
+        assert!(!name.hiragana().is_empty());
+    }
+
+    #[test]
+    fn katakana() {
+        let name = Name::new();
+        assert!(!name.katakana().is_empty());
+    }
+
+    #[test]
+    fn gender() {
+        {
+            let name = Name::new_with_gender(Gender::Female);
+            assert!(name.is_female());
+        }
+        {
+            let name = Name::new_with_gender(Gender::Male);
+            assert!(name.is_male());
+        }
+    }
+
+    #[test]
+    fn first_name() {
+        let first = Name::new().first;
+        assert!(!first.kanji().is_empty());
+        assert!(!first.hiragana().is_empty());
+        assert!(!first.katakana().is_empty());
+    }
+
+    #[test]
+    fn last_name() {
+        let last = Name::new().last;
+        assert!(!last.kanji().is_empty());
+        assert!(!last.hiragana().is_empty());
+        assert!(!last.katakana().is_empty());
+    }
 }
