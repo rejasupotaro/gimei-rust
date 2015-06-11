@@ -7,9 +7,18 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::collections::BTreeMap;
 use toml::Value;
+use self::name::gender::Gender;
 
 pub fn name() -> name::Name {
     name::Name::new()
+}
+
+pub fn female() -> name::Name {
+    name::Name::new_with_gender(Gender::Female)
+}
+
+pub fn male() -> name::Name {
+    name::Name::new_with_gender(Gender::Male)
 }
 
 pub fn names() -> BTreeMap<String, Value> {

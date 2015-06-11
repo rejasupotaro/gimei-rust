@@ -1,6 +1,6 @@
 extern crate rand;
 
-mod gender;
+pub mod gender;
 
 use toml::Value;
 use self::gender::Gender;
