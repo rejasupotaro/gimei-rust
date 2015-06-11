@@ -1,8 +1,6 @@
-extern crate rand;
-
 pub mod gender;
 
-use toml::Value;
+use Samplable;
 use self::gender::Gender;
 
 #[derive(Debug)]
@@ -122,23 +120,6 @@ impl Last {
 
     pub fn katakana(&self) -> String {
         self.name.get(2).unwrap().to_string()
-    }
-}
-
-trait Samplable {
-    fn sample(&self) -> & Value;
-}
-
-impl Samplable for Value {
-    fn sample(&self) -> & Value {
-        match *self {
-            Value::Array(..) => {
-                let vec = &self.as_slice().unwrap();
-                let index = rand::random::<usize>() % vec.len();
-                &vec[index]
-            },
-            _ => self
-        }
     }
 }
 
