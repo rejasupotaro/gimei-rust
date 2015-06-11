@@ -26,14 +26,14 @@ gimei.first.katakana()  #=> "ハルナ"
 
 ```rust
 let gimei = gimei::male();
-gimei.is_male()    #=> true
-gimei.is_female()  #=> false
-gimei.kanji()      #=> "小林 顕士"
+gimei.is_male()         #=> true
+gimei.is_female()       #=> false
+gimei.kanji()           #=> "小林 顕士"
 
 gimei = gimei.female();
-gimei.is_male()    #=> false
-gimei.is_female()  #=> true
-gimei.kanji()      #=> "根本 彩世"
+gimei.is_male()         #=> false
+gimei.is_female()       #=> true
+gimei.kanji()           #=> "根本 彩世"
 ```
 
 出力される名前の候補となるデータは data/names.yml にあるので、必要であればファイルを修正してください。
@@ -43,26 +43,22 @@ gimei.kanji()      #=> "根本 彩世"
 都道府県、区、市、町を組み合わせた住所情報を漢字、ひらがな、カタカナで取得することができます。
 
 ```rust
-let address = Gimei::address();
-address.kanji                # => 岡山県大島郡大和村稲木町
-address.to_s                 # => 岡山県大島郡大和村稲木町
-address.hiragana             # => おかやまけんおおしまぐんやまとそんいなぎちょう
-address.katakana             # => オカヤマケンオオシマグンヤマトソンイナギチョウ
+let address = gimei::address();
+address.kanji()                # => 岡山県大島郡大和村稲木町
+address.hiragana()             # => おかやまけんおおしまぐんやまとそんいなぎちょう
+address.katakana()             # => オカヤマケンオオシマグンヤマトソンイナギチョウ
 
-address.prefecture.kanji     # => 岡山県
-address.prefecture.to_s      # => 岡山県
-address.prefecture.hiragana  # => おかやまけん
-address.prefecture.katakana  # => オカヤマケン
+address.prefecture.kanji()     # => 岡山県
+address.prefecture.hiragana()  # => おかやまけん
+address.prefecture.katakana()  # => オカヤマケン
 
-address.city.kanji           # => 大島郡大和村
-address.city.to_s            # => 大島郡大和村
-address.city.hiragana        # => おおしまぐんやまとそん
-address.city.katakana        # => オオシマグンヤマトソン
+address.city.kanji()           # => 大島郡大和村
+address.city.hiragana()        # => おおしまぐんやまとそん
+address.city.katakana()        # => オオシマグンヤマトソン
 
-address.town.kanji           # => 稲木町
-address.town.to_s            # => 稲木町
-address.town.hiragana        # => いなぎちょう
-address.town.katakana        # => イナギチョウ
+address.town.kanji()           # => 稲木町
+address.town.hiragana()        # => いなぎちょう
+address.town.katakana()        # => イナギチョウ
 ```
 
 出力される住所の候補となるデータは lib/data/addresses.yml にあるので、必要であればファイルを修正してください。
