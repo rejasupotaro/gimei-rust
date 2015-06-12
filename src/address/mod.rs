@@ -17,19 +17,19 @@ impl Address {
     pub fn kanji(&self) -> String {
         let prefecture = self.prefecture.kanji();
         let city = self.city.kanji();
-        vec![prefecture, city].concat()
+        format!("{}{}", prefecture, city)
     }
 
     pub fn hiragana(&self) -> String {
         let prefecture = self.prefecture.hiragana();
         let city = self.city.hiragana();
-        vec![prefecture, city].concat()
+        format!("{}{}", prefecture, city)
     }
 
     pub fn katakana(&self) -> String {
         let prefecture = self.prefecture.katakana();
         let city = self.city.katakana();
-        vec![prefecture, city].concat()
+        format!("{}{}", prefecture, city)
     }
 }
 

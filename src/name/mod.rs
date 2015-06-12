@@ -24,19 +24,19 @@ impl Name {
     pub fn kanji(&self) -> String {
         let first = self.first.kanji();
         let last = self.last.kanji();
-        vec![last, first].connect(" ")
+        format!("{} {}", last, first)
     }
 
     pub fn hiragana(&self) -> String {
         let first = self.first.hiragana();
         let last = self.last.hiragana();
-        vec![last, first].connect(" ")
+        format!("{} {}", last, first)
     }
 
     pub fn katakana(&self) -> String {
         let first = self.first.katakana();
         let last = self.last.katakana();
-        vec![last, first].connect(" ")
+        format!("{} {}", last, first)
     }
 
     pub fn is_female(&self) -> bool {
