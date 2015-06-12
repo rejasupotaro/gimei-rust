@@ -1,3 +1,5 @@
+#[macro_use]
+extern crate lazy_static;
 extern crate toml;
 extern crate rustc_serialize;
 extern crate rand;
@@ -10,6 +12,11 @@ use std::io::prelude::*;
 use std::collections::BTreeMap;
 use toml::Value;
 use self::name::gender::Gender;
+
+lazy_static! {
+    static ref ADDRESSES: BTreeMap<String, Value> = addresses();
+    static ref NAMES: BTreeMap<String, Value> = names();
+}
 
 pub fn name() -> name::Name {
     name::Name::new()

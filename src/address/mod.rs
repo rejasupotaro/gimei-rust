@@ -45,7 +45,7 @@ pub struct Prefecture {
 
 impl Prefecture {
     pub fn new() -> Prefecture {
-        let prefectures = super::addresses()
+        let prefectures = super::ADDRESSES
             .get("prefecture")
             .and_then(|n| n.sample().as_slice())
             .unwrap()
@@ -78,7 +78,7 @@ pub struct City {
 
 impl City {
     pub fn new() -> City {
-        let cities = super::addresses()
+        let cities = super::ADDRESSES
             .get("city")
             .and_then(|n| n.sample().as_slice())
             .unwrap()

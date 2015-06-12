@@ -56,7 +56,7 @@ pub struct First {
 
 impl First {
     pub fn new(gender: Gender) -> First {
-        let name = super::names()
+        let name = super::NAMES
             .get("first_name")
             .and_then(|n| n.lookup(gender.type_str()))
             .and_then(|n| n.sample().as_slice())
@@ -98,7 +98,7 @@ pub struct Last {
 
 impl Last {
     pub fn new() -> Last {
-        let name = super::names()
+        let name = super::NAMES
             .get("last_name")
             .and_then(|n| n.sample().as_slice())
             .unwrap()

@@ -7,3 +7,4 @@ authors = ["Kentaro Takiguchi <kentaro-takiguchi@cookpad.com>"]
 toml = "*"
 rustc-serialize = "*"
 rand = "*"
+lazy_static = "*"
