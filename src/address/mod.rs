@@ -3,33 +3,38 @@ use Samplable;
 #[derive(Debug)]
 pub struct Address {
     pub prefecture: Prefecture,
-    pub city: City
+    pub city: City,
+    pub town: Town
 }
 
 impl Address {
     pub fn new() -> Address {
         Address {
             prefecture: Prefecture::new(),
-            city: City::new()
+            city: City::new(),
+            town: Town::new()
         }
     }
 
     pub fn kanji(&self) -> String {
         let prefecture = self.prefecture.kanji();
         let city = self.city.kanji();
-        format!("{}{}", prefecture, city)
+        let town = self.town.kanji();
+        format!("{}{}{}", prefecture, city, town)
     }
 
     pub fn hiragana(&self) -> String {
         let prefecture = self.prefecture.hiragana();
         let city = self.city.hiragana();
-        format!("{}{}", prefecture, city)
+        let town = self.town.hiragana();
+        format!("{}{}{}", prefecture, city, town)
     }
 
     pub fn katakana(&self) -> String {
         let prefecture = self.prefecture.katakana();
         let city = self.city.katakana();
-        format!("{}{}", prefecture, city)
+        let town = self.town.katakana();
+        format!("{}{}{}", prefecture, city, town)
     }
 }
 
@@ -98,6 +103,38 @@ impl City {
     }
 }
 
+#[derive(Debug)]
+pub struct Town {
+    towns: Vec<String>
+}
+
+impl Town {
+    pub fn new() -> Town {
+        let towns = super::addresses()
+            .get("town")
+            .and_then(|n| n.sample().as_slice())
+            .unwrap()
+            .iter()
+            .map(|n| n.as_str().unwrap().to_string())
+            .collect::<Vec<String>>();
+        Town {
+            towns: towns
+        }
+    }
+
+    pub fn kanji(&self) -> String {
+        self.towns.get(0).unwrap().to_string()
+    }
+
+    pub fn hiragana(&self) -> String {
+        self.towns.get(1).unwrap().to_string()
+    }
+
+    pub fn katakana(&self) -> String {
+        self.towns.get(2).unwrap().to_string()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -126,5 +163,21 @@ mod tests {
         assert!(!prefecture.kanji().is_empty());
         assert!(!prefecture.hiragana().is_empty());
         assert!(!prefecture.katakana().is_empty());
+    }
+
+    #[test]
+    fn city() {
+        let city = City::new();
+        assert!(!city.kanji().is_empty());
+        assert!(!city.hiragana().is_empty());
+        assert!(!city.katakana().is_empty());
+    }
+
+    #[test]
+    fn town() {
+        let town = Town::new();
+        assert!(!town.kanji().is_empty());
+        assert!(!town.hiragana().is_empty());
+        assert!(!town.katakana().is_empty());
     }
 }

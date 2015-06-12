@@ -59,11 +59,11 @@ fn load_file(filename: &str) -> BTreeMap<String, Value> {
 }
 
 trait Samplable {
-    fn sample(&self) -> & Value;
+    fn sample(&self) -> &Value;
 }
 
 impl Samplable for Value {
-    fn sample(&self) -> & Value {
+    fn sample(&self) -> &Value {
         match *self {
             Value::Array(..) => {
                 let vec = &self.as_slice().unwrap();
