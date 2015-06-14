@@ -5,13 +5,14 @@ extern crate rustc_serialize;
 extern crate rand;
 
 pub mod name;
+pub mod gender;
 pub mod address;
 
 use std::fs::File;
 use std::io::prelude::*;
 use std::collections::BTreeMap;
 use toml::Value;
-use self::name::gender::Gender;
+use gender::Gender;
 
 lazy_static! {
     static ref ADDRESSES: BTreeMap<String, Value> = addresses();

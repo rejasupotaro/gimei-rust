@@ -1,7 +1,5 @@
-pub mod gender;
-
 use Samplable;
-use self::gender::Gender;
+use gender::Gender;
 
 #[derive(Debug)]
 pub struct Name {
@@ -126,7 +124,7 @@ impl Last {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use super::gender::Gender;
+    use gender::Gender;
 
     #[test]
     fn kanji() {
