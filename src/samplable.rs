@@ -12,8 +12,8 @@ impl Samplable for Value {
                 let vec = &self.as_slice().unwrap();
                 let index = rand::random::<usize>() % vec.len();
                 &vec[index]
-            },
-            _ => self
+            }
+            _ => self,
         }
     }
 }
