@@ -10,7 +10,7 @@ documentation = "http://doc.rust-lang.org/gimei"
 description = """
 Random Japanese name and address generator (Port of gem's gimei to Rust).
 """
-include = ["Cargo.toml", "src/*", "data/*"]
+include = ["Cargo.toml", "src/*"]
 
 [lib]
 name = "gimei"

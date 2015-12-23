@@ -36,11 +36,11 @@ pub fn address() -> address::Address {
 }
 
 fn names() -> BTreeMap<String, Value> {
-    load_file("data/names.toml")
+    load_file("src/data/names.toml")
 }
 
 fn addresses() -> BTreeMap<String, Value> {
-    load_file("data/addresses.toml")
+    load_file("src/data/addresses.toml")
 }
 
 fn load_file(filename: &str) -> BTreeMap<String, Value> {
