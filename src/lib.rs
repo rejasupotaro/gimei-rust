@@ -7,6 +7,7 @@ extern crate rand;
 pub mod name;
 pub mod gender;
 pub mod address;
+pub mod japanese;
 
 use std::fs::File;
 use std::io::prelude::*;

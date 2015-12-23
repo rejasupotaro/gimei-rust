@@ -1,4 +1,4 @@
-extern crate rand;
+use rand;
 
 #[derive(Debug)]
 pub enum Gender {

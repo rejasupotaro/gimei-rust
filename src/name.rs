@@ -1,10 +1,11 @@
 use Samplable;
 use gender::Gender;
+use japanese::Japanese;
 
 #[derive(Debug)]
 pub struct Name {
-    pub first: First,
-    pub last: Last,
+    pub first: Japanese,
+    pub last: Japanese,
     pub gender: Gender,
 }
 
@@ -15,28 +16,33 @@ impl Name {
 
     pub fn new_with_gender(gender: Gender) -> Name {
         Name {
-            first: First::new(&gender),
-            last: Last::new(),
+            first: Japanese::from_array(super::NAMES.get("first_name")
+                                                    .and_then(|n| n.lookup(gender.type_str()))
+                                                    .and_then(|n| n.sample().as_slice())
+                                                    .unwrap()
+                                                    .iter()
+                                                    .map(|n| n.as_str().unwrap())
+                                                    .collect::<Vec<&str>>()),
+            last: Japanese::from_array(super::NAMES.get("last_name")
+                                                   .and_then(|n| n.sample().as_slice())
+                                                   .unwrap()
+                                                   .iter()
+                                                   .map(|n| n.as_str().unwrap())
+                                                   .collect::<Vec<&str>>()),
             gender: gender,
         }
     }
 
     pub fn kanji(&self) -> String {
-        let first = self.first.kanji();
-        let last = self.last.kanji();
-        format!("{} {}", last, first)
+        format!("{} {}", self.last.kanji, self.first.kanji)
     }
 
     pub fn hiragana(&self) -> String {
-        let first = self.first.hiragana();
-        let last = self.last.hiragana();
-        format!("{} {}", last, first)
+        format!("{} {}", self.last.hiragana, self.first.hiragana)
     }
 
     pub fn katakana(&self) -> String {
-        let first = self.first.katakana();
-        let last = self.last.katakana();
-        format!("{} {}", last, first)
+        format!("{} {}", self.last.katakana, self.first.katakana)
     }
 
     pub fn is_female(&self) -> bool {
@@ -45,65 +51,6 @@ impl Name {
 
     pub fn is_male(&self) -> bool {
         self.gender.is_male()
-    }
-}
-
-#[derive(Debug)]
-pub struct First {
-    name: Vec<String>,
-}
-
-impl First {
-    pub fn new(gender: &Gender) -> First {
-        let name = super::NAMES.get("first_name")
-                               .and_then(|n| n.lookup(gender.type_str()))
-                               .and_then(|n| n.sample().as_slice())
-                               .unwrap()
-                               .iter()
-                               .map(|n| n.as_str().unwrap().to_string())
-                               .collect::<Vec<String>>();
-        First { name: name }
-    }
-
-    pub fn kanji(&self) -> String {
-        self.name.get(0).unwrap().to_string()
-    }
-
-    pub fn hiragana(&self) -> String {
-        self.name.get(1).unwrap().to_string()
-    }
-
-    pub fn katakana(&self) -> String {
-        self.name.get(2).unwrap().to_string()
-    }
-}
-
-#[derive(Debug)]
-pub struct Last {
-    name: Vec<String>,
-}
-
-impl Last {
-    pub fn new() -> Last {
-        let name = super::NAMES.get("last_name")
-                               .and_then(|n| n.sample().as_slice())
-                               .unwrap()
-                               .iter()
-                               .map(|n| n.as_str().unwrap().to_string())
-                               .collect::<Vec<String>>();
-        Last { name: name }
-    }
-
-    pub fn kanji(&self) -> String {
-        self.name.get(0).unwrap().to_string()
-    }
-
-    pub fn hiragana(&self) -> String {
-        self.name.get(1).unwrap().to_string()
-    }
-
-    pub fn katakana(&self) -> String {
-        self.name.get(2).unwrap().to_string()
     }
 }
 
@@ -145,16 +92,16 @@ mod tests {
     #[test]
     fn first_name() {
         let first = Name::new().first;
-        assert!(!first.kanji().is_empty());
-        assert!(!first.hiragana().is_empty());
-        assert!(!first.katakana().is_empty());
+        assert!(!first.kanji.is_empty());
+        assert!(!first.hiragana.is_empty());
+        assert!(!first.katakana.is_empty());
     }
 
     #[test]
     fn last_name() {
         let last = Name::new().last;
-        assert!(!last.kanji().is_empty());
-        assert!(!last.hiragana().is_empty());
-        assert!(!last.katakana().is_empty());
+        assert!(!last.kanji.is_empty());
+        assert!(!last.hiragana.is_empty());
+        assert!(!last.katakana.is_empty());
     }
 }
