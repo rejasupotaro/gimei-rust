@@ -1,5 +1,5 @@
 use toml::Value;
-use rand;
+use rand::{Rng, thread_rng};
 
 pub trait Samplable {
     fn sample(&self) -> &Value;
@@ -7,13 +7,6 @@ pub trait Samplable {
 
 impl Samplable for Value {
     fn sample(&self) -> &Value {
-        match *self {
-            Value::Array(..) => {
-                let vec = &self.as_slice().unwrap();
-                let index = rand::random::<usize>() % vec.len();
-                &vec[index]
-            }
-            _ => self,
-        }
+        thread_rng().choose(&self.as_slice().unwrap()).unwrap()
     }
 }
