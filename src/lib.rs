@@ -61,7 +61,7 @@ fn load_file(filename: &str) -> BTreeMap<String, Value> {
                 errors.push(format!("{}:{}:{}-{}:{} error: {}",
                          filename, loline, locol, hiline, hicol, error.desc));
             }
-            panic!(errors.connect("¥n"))
+            panic!(errors.join("¥n"))
         }
     }
 }
