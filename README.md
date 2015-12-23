@@ -14,12 +14,12 @@ let gimei = gimei::name();
 gimei.kanji()           // => 斎藤 陽菜
 gimei.hiragana()        // => さいとう はるな
 gimei.katakana()        // => サイトウ ハルナ
-gimei.last.kanji()      // => 斎藤
-gimei.last.hiragana()   // => さいとう
-gimei.last.katakana()   // => サイトウ
-gimei.first.kanji()     // => 陽菜
-gimei.first.hiragana()  // => はるな
-gimei.first.katakana()  // => ハルナ
+gimei.last.kanji        // => 斎藤
+gimei.last.hiragana     // => さいとう
+gimei.last.katakana     // => サイトウ
+gimei.first.kanji       // => 陽菜
+gimei.first.hiragana    // => はるな
+gimei.first.katakana    // => ハルナ
 ```
 
 下記のように男性／女性の名前を返すことを明示的に指定できます。`gimei::name()` の場合は男女の名前を等確率で返します。
@@ -48,17 +48,17 @@ address.kanji()                // => 岡山県大島郡大和村稲木町
 address.hiragana()             // => おかやまけんおおしまぐんやまとそんいなぎちょう
 address.katakana()             // => オカヤマケンオオシマグンヤマトソンイナギチョウ
 
-address.prefecture.kanji()     // => 岡山県
-address.prefecture.hiragana()  // => おかやまけん
-address.prefecture.katakana()  // => オカヤマケン
+address.prefecture.kanji       // => 岡山県
+address.prefecture.hiragana    // => おかやまけん
+address.prefecture.katakana    // => オカヤマケン
 
-address.city.kanji()           // => 大島郡大和村
-address.city.hiragana()        // => おおしまぐんやまとそん
-address.city.katakana()        // => オオシマグンヤマトソン
+address.city.kanji             // => 大島郡大和村
+address.city.hiragana          // => おおしまぐんやまとそん
+address.city.katakana          // => オオシマグンヤマトソン
 
-address.town.kanji()           // => 稲木町
-address.town.hiragana()        // => いなぎちょう
-address.town.katakana()        // => イナギチョウ
+address.town.kanji             // => 稲木町
+address.town.hiragana          // => いなぎちょう
+address.town.katakana          // => イナギチョウ
 ```
 
 出力される住所の候補となるデータは `data/addresses.toml` にあるので、必要であればファイルを修正してください。
