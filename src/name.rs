@@ -5,6 +5,7 @@ use gender::Gender;
 pub struct Name {
     pub first: First,
     pub last: Last,
+    pub gender: Gender,
 }
 
 impl Name {
@@ -14,8 +15,9 @@ impl Name {
 
     pub fn new_with_gender(gender: Gender) -> Name {
         Name {
-            first: First::new(gender),
+            first: First::new(&gender),
             last: Last::new(),
+            gender: gender,
         }
     }
 
@@ -38,22 +40,21 @@ impl Name {
     }
 
     pub fn is_female(&self) -> bool {
-        self.first.is_female()
+        self.gender.is_female()
     }
 
     pub fn is_male(&self) -> bool {
-        self.first.is_male()
+        self.gender.is_male()
     }
 }
 
 #[derive(Debug)]
 pub struct First {
-    pub gender: Gender,
     name: Vec<String>,
 }
 
 impl First {
-    pub fn new(gender: Gender) -> First {
+    pub fn new(gender: &Gender) -> First {
         let name = super::NAMES.get("first_name")
                                .and_then(|n| n.lookup(gender.type_str()))
                                .and_then(|n| n.sample().as_slice())
@@ -61,18 +62,7 @@ impl First {
                                .iter()
                                .map(|n| n.as_str().unwrap().to_string())
                                .collect::<Vec<String>>();
-        First {
-            gender: gender,
-            name: name,
-        }
-    }
-
-    pub fn is_female(&self) -> bool {
-        self.gender.is_female()
-    }
-
-    pub fn is_male(&self) -> bool {
-        self.gender.is_male()
+        First { name: name }
     }
 
     pub fn kanji(&self) -> String {
