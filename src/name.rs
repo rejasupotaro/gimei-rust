@@ -1,6 +1,6 @@
-use Samplable;
-use gender::Gender;
 use japanese::Japanese;
+use gender::Gender;
+use samplable::Samplable;
 
 #[derive(Debug)]
 pub struct Name {

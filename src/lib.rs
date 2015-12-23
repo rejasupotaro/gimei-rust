@@ -9,6 +9,8 @@ pub mod gender;
 pub mod address;
 pub mod japanese;
 
+mod samplable;
+
 use std::fs::File;
 use std::io::prelude::*;
 use std::collections::BTreeMap;
@@ -63,23 +65,6 @@ fn load_file(filename: &str) -> BTreeMap<String, Value> {
                          filename, loline, locol, hiline, hicol, error.desc));
             }
             panic!(errors.join("¥n"))
-        }
-    }
-}
-
-trait Samplable {
-    fn sample(&self) -> &Value;
-}
-
-impl Samplable for Value {
-    fn sample(&self) -> &Value {
-        match *self {
-            Value::Array(..) => {
-                let vec = &self.as_slice().unwrap();
-                let index = rand::random::<usize>() % vec.len();
-                &vec[index]
-            },
-            _ => self
         }
     }
 }

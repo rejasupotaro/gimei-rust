@@ -1,5 +1,5 @@
-use Samplable;
 use japanese::Japanese;
+use samplable::Samplable;
 
 #[derive(Debug)]
 pub struct Address {
