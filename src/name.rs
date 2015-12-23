@@ -4,7 +4,7 @@ use gender::Gender;
 #[derive(Debug)]
 pub struct Name {
     pub first: First,
-    pub last: Last
+    pub last: Last,
 }
 
 impl Name {
@@ -49,22 +49,21 @@ impl Name {
 #[derive(Debug)]
 pub struct First {
     pub gender: Gender,
-    name: Vec<String>
+    name: Vec<String>,
 }
 
 impl First {
     pub fn new(gender: Gender) -> First {
-        let name = super::NAMES
-            .get("first_name")
-            .and_then(|n| n.lookup(gender.type_str()))
-            .and_then(|n| n.sample().as_slice())
-            .unwrap()
-            .iter()
-            .map(|n| n.as_str().unwrap().to_string())
-            .collect::<Vec<String>>();
+        let name = super::NAMES.get("first_name")
+                               .and_then(|n| n.lookup(gender.type_str()))
+                               .and_then(|n| n.sample().as_slice())
+                               .unwrap()
+                               .iter()
+                               .map(|n| n.as_str().unwrap().to_string())
+                               .collect::<Vec<String>>();
         First {
             gender: gender,
-            name: name
+            name: name,
         }
     }
 
@@ -91,21 +90,18 @@ impl First {
 
 #[derive(Debug)]
 pub struct Last {
-    name: Vec<String>
+    name: Vec<String>,
 }
 
 impl Last {
     pub fn new() -> Last {
-        let name = super::NAMES
-            .get("last_name")
-            .and_then(|n| n.sample().as_slice())
-            .unwrap()
-            .iter()
-            .map(|n| n.as_str().unwrap().to_string())
-            .collect::<Vec<String>>();
-        Last {
-            name: name
-        }
+        let name = super::NAMES.get("last_name")
+                               .and_then(|n| n.sample().as_slice())
+                               .unwrap()
+                               .iter()
+                               .map(|n| n.as_str().unwrap().to_string())
+                               .collect::<Vec<String>>();
+        Last { name: name }
     }
 
     pub fn kanji(&self) -> String {

@@ -3,35 +3,35 @@ extern crate rand;
 #[derive(Debug)]
 pub enum Gender {
     Female,
-    Male
+    Male,
 }
 
 impl Gender {
     pub fn sample() -> Gender {
         match rand::random::<usize>() % 2 {
             0 => Gender::Female,
-            _ => Gender::Male
+            _ => Gender::Male,
         }
     }
 
     pub fn is_female(&self) -> bool {
         match *self {
             Gender::Female => true,
-            _ => false
+            _ => false,
         }
     }
 
     pub fn is_male(&self) -> bool {
         match *self {
             Gender::Male => true,
-            _ => false
+            _ => false,
         }
     }
 
     pub fn type_str(&self) -> &'static str {
         match *self {
             Gender::Female => "female",
-            Gender::Male => "male"
+            Gender::Male => "male",
         }
     }
 }

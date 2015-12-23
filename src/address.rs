@@ -4,7 +4,7 @@ use Samplable;
 pub struct Address {
     pub prefecture: Prefecture,
     pub city: City,
-    pub town: Town
+    pub town: Town,
 }
 
 impl Address {
@@ -12,7 +12,7 @@ impl Address {
         Address {
             prefecture: Prefecture::new(),
             city: City::new(),
-            town: Town::new()
+            town: Town::new(),
         }
     }
 
@@ -40,21 +40,18 @@ impl Address {
 
 #[derive(Debug)]
 pub struct Prefecture {
-    prefectures: Vec<String>
+    prefectures: Vec<String>,
 }
 
 impl Prefecture {
     pub fn new() -> Prefecture {
-        let prefectures = super::ADDRESSES
-            .get("prefecture")
-            .and_then(|n| n.sample().as_slice())
-            .unwrap()
-            .iter()
-            .map(|n| n.as_str().unwrap().to_string())
-            .collect::<Vec<String>>();
-        Prefecture {
-            prefectures: prefectures
-        }
+        let prefectures = super::ADDRESSES.get("prefecture")
+                                          .and_then(|n| n.sample().as_slice())
+                                          .unwrap()
+                                          .iter()
+                                          .map(|n| n.as_str().unwrap().to_string())
+                                          .collect::<Vec<String>>();
+        Prefecture { prefectures: prefectures }
     }
 
     pub fn kanji(&self) -> String {
@@ -73,21 +70,18 @@ impl Prefecture {
 
 #[derive(Debug)]
 pub struct City {
-    cities: Vec<String>
+    cities: Vec<String>,
 }
 
 impl City {
     pub fn new() -> City {
-        let cities = super::ADDRESSES
-            .get("city")
-            .and_then(|n| n.sample().as_slice())
-            .unwrap()
-            .iter()
-            .map(|n| n.as_str().unwrap().to_string())
-            .collect::<Vec<String>>();
-        City {
-            cities: cities
-        }
+        let cities = super::ADDRESSES.get("city")
+                                     .and_then(|n| n.sample().as_slice())
+                                     .unwrap()
+                                     .iter()
+                                     .map(|n| n.as_str().unwrap().to_string())
+                                     .collect::<Vec<String>>();
+        City { cities: cities }
     }
 
     pub fn kanji(&self) -> String {
@@ -105,21 +99,19 @@ impl City {
 
 #[derive(Debug)]
 pub struct Town {
-    towns: Vec<String>
+    towns: Vec<String>,
 }
 
 impl Town {
     pub fn new() -> Town {
         let towns = super::addresses()
-            .get("town")
-            .and_then(|n| n.sample().as_slice())
-            .unwrap()
-            .iter()
-            .map(|n| n.as_str().unwrap().to_string())
-            .collect::<Vec<String>>();
-        Town {
-            towns: towns
-        }
+                        .get("town")
+                        .and_then(|n| n.sample().as_slice())
+                        .unwrap()
+                        .iter()
+                        .map(|n| n.as_str().unwrap().to_string())
+                        .collect::<Vec<String>>();
+        Town { towns: towns }
     }
 
     pub fn kanji(&self) -> String {
